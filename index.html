@@ -51,16 +51,15 @@ animation:floatCard 5s ease-in-out infinite;
 50%{transform:translateY(-8px);}
 }
 
-h1{color:var(--primary); font-size: 1.8rem;}
-h2{color:#555; font-size: 1.1rem;}
+h1{color:var(--primary); font-size:1.8rem;}
+h2{color:#555; font-size:1.1rem;}
 
-/* ✅ ปรับแต่งหน้าที่ 4 ให้จิ๋วสุดที่ 250px */
-#page4 h1 { font-size: 1.1rem; margin-bottom: 2px; }
-#page4 h2 { font-size: 0.8rem; line-height: 1.3; margin-bottom: 5px; }
+#page4 h1{font-size:1.1rem;margin-bottom:2px;}
+#page4 h2{font-size:.78rem;line-height:1.3;margin-bottom:5px;}
 
-#page4.page {
-    max-width: 250px;
-    padding: 15px 10px;
+#page4.page{
+max-width:240px;
+padding:15px 8px;
 }
 
 button{
@@ -97,7 +96,7 @@ to{transform:translateY(110vh);}
 
 .photo{
 position:fixed;
-width:90px; 
+width:90px;
 border:4px solid white;
 border-radius:10px;
 box-shadow:0 5px 15px rgba(0,0,0,.2);
@@ -144,9 +143,11 @@ to{transform:translateX(-50%) scale(1.2);}
 <source src="click.mp3" type="audio/mpeg">
 </audio>
 
+<!-- CAKE -->
 <div id="cakePage" class="page active">
 <h1>Make a Wish 🎂</h1>
-<div style="position:relative;font-size:100px; margin: 10px 0;">
+
+<div style="position:relative;font-size:100px;margin:10px 0;">
 🎂
 <div id="flame"
 style="
@@ -159,17 +160,20 @@ animation:flicker .15s infinite alternate;">
 🔥
 </div>
 </div>
+
 <h2>อธิษฐานแล้ว "เป่าเทียนให้ดับ"<br>เพื่อเริ่มวันพิเศษกันนะ!</h2>
 <button onclick="startMicBlow()">กดเริ่มเป่า</button>
 </div>
 
+<!-- PAGE 1 -->
 <div id="page1" class="page">
 <h1>Hello, You! ✨</h1>
-<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="100" style="margin:10px 0;">
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="100">
 <h2>วันนี้เป็นวันสำคัญล่ะ...<br>มีอะไรจะบอกด้วยนะ</h2>
 <button onclick="nextPage(2)">กดดูสิ 🤍</button>
 </div>
 
+<!-- PAGE 2 -->
 <div id="page2" class="page">
 <h1>HBD TO YOU 🎂</h1>
 <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="130">
@@ -177,6 +181,7 @@ animation:flicker .15s infinite alternate;">
 <button id="btn-next-3" style="display:none" onclick="nextPage(3)">ไปต่อกันเลย 🚀</button>
 </div>
 
+<!-- PAGE 3 -->
 <div id="page3" class="page">
 <h1>มีความในใจอยากบอก 💌</h1>
 <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" width="120">
@@ -184,6 +189,7 @@ animation:flicker .15s infinite alternate;">
 <button id="btn-next-4" style="display:none" onclick="nextPage(4)">ไปดูของขวัญ 🎁</button>
 </div>
 
+<!-- PAGE 4 -->
 <div id="page4" class="page">
 <h1>Happy Everyday 💐</h1>
 <h2>ขอให้ยิ้มได้เยอะๆ ในทุกวันนะ <br>นี่คือของขวัญเล็กๆ จากพี่ 🤍</h2>
@@ -191,55 +197,77 @@ animation:flicker .15s infinite alternate;">
 </div>
 
 <script>
+
 let micStarted=false;
 let blown=false;
 
 async function startMicBlow(){
 if(micStarted)return;
 micStarted=true;
-try{
+
 const stream=await navigator.mediaDevices.getUserMedia({audio:true});
 const audioCtx=new (window.AudioContext||window.webkitAudioContext)();
 const mic=audioCtx.createMediaStreamSource(stream);
 const analyser=audioCtx.createAnalyser();
+
 analyser.fftSize=256;
 mic.connect(analyser);
+
 const data=new Uint8Array(analyser.frequencyBinCount);
+
 const THRESHOLD=18;
 const HOLD_TIME=180;
+
 let hold=0;
+
 function detect(){
+
 analyser.getByteFrequencyData(data);
+
 let volume=data.reduce((a,b)=>a+b)/data.length;
-if(volume>THRESHOLD){ hold+=16; }else{ hold=0; }
+
+if(volume>THRESHOLD) hold+=16;
+else hold=0;
+
 if(!blown && hold>HOLD_TIME){
 blown=true;
+
 document.getElementById("flame").style.display="none";
+
 setTimeout(()=>{
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById("page1").classList.add("active");
 },1200);
+
 return;
 }
+
 requestAnimationFrame(detect);
 }
+
 detect();
-}catch(e){ alert("อนุญาตไมค์ก่อนนะ 🎤"); }
 }
 
 const photos=[
-    "imgs/1.png", "imgs/2.png", "imgs/3.png", "imgs/4.png",
-    "imgs/5.png", "imgs/6.png", "imgs/7.png", "imgs/8.png",
-    "imgs/9.webp", "imgs/10.png", "imgs/11.png", "imgs/12.png", "imgs/13.png",
-    "imgs/14.png", "imgs/15.png", "imgs/16.png", "imgs/17.png"
+"imgs/1.png","imgs/2.png","imgs/3.png","imgs/4.png",
+"imgs/5.png","imgs/6.png","imgs/7.png","imgs/8.png",
+"imgs/9.webp","imgs/10.png","imgs/11.png","imgs/12.png",
+"imgs/13.png","imgs/14.png","imgs/15.png","imgs/16.png","imgs/17.png"
 ];
 
-const msgPage2 = "ขอให้โลกใจดีกับเธอ เหมือนที่เธอใจดีกับเรา... ขอให้มีความสุขที่สุดในโลกเลยนะ 💖";
-const msgPage3 = "ขอบคุณที่อยู่เป็นรอยยิ้มดีๆ ให้กันเสมอ ✨";
+/* ✅ preload */
+photos.forEach(src=>{
+const img=new Image();
+img.src=src;
+});
+
+const msgPage2="ขอให้โลกใจดีกับเธอ เหมือนที่เธอใจดีกับเรา... ขอให้มีความสุขที่สุดในโลกเลยนะ 💖";
+const msgPage3="ขอบคุณที่อยู่เป็นรอยยิ้มดีๆ ให้กันเสมอ ✨";
 
 function nextPage(num){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById('page'+num).classList.add('active');
+
 if(num===2)startTyping("typing-text-2",msgPage2,"btn-next-3");
 if(num===3)startTyping("typing-text-3",msgPage3,"btn-next-4");
 }
@@ -249,6 +277,7 @@ let i=0;
 const el=document.getElementById(id);
 el.innerHTML="";
 document.getElementById(btn).style.display="none";
+
 function type(){
 if(i<text.length){
 el.innerHTML+=text.charAt(i);
@@ -257,6 +286,7 @@ setTimeout(type,60);
 }else{
 document.getElementById(btn).style.display="block";
 }}
+
 type();
 }
 
@@ -284,13 +314,18 @@ s.style.top=Math.random()*100+"vh";
 document.body.appendChild(s);
 setTimeout(()=>s.remove(),3000);
 }
+
 setInterval(createSparkle,400);
 
 function surprise(){
+
 document.getElementById("click").play().catch(()=>{});
+
 for(let i=0;i<15;i++){
 setTimeout(()=>createItem("❤️"),i*100);
 }
+
+/* ✅ รูปขึ้นเร็ว */
 photos.forEach((src,i)=>{
 setTimeout(()=>{
 const img=document.createElement("img");
@@ -300,9 +335,10 @@ img.style.top=(Math.random()*65+10)+"vh";
 img.style.left=(Math.random()*65+10)+"vw";
 img.style.setProperty('--r',(Math.random()*40-20)+'deg');
 document.body.appendChild(img);
-},i*150);
+},i*40);
 });
 }
+
 </script>
 
 </body>
