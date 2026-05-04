@@ -54,14 +54,14 @@ animation:floatCard 5s ease-in-out infinite;
 h1{color:var(--primary); font-size: 1.8rem;}
 h2{color:#555; font-size: 1.1rem;}
 
-/* ✅ ปรับขนาดข้อความหน้าที่ 4 ให้เล็กลง */
-#page4 h1 { font-size: 1.4rem; margin-bottom: 5px; }
-#page4 h2 { font-size: 0.95rem; line-height: 1.4; }
+/* ✅ ปรับขนาดข้อความหน้าที่ 4 ให้จิ๋วลง */
+#page4 h1 { font-size: 1.2rem; margin-bottom: 2px; }
+#page4 h2 { font-size: 0.85rem; line-height: 1.3; margin-bottom: 10px; }
 
-/* ✅ ปรับขนาดกรอบสีขาวหน้าที่ 4 ให้เล็กลง */
+/* ✅ ปรับขนาดกรอบสีขาวหน้าที่ 4 ให้เล็กลงอีก (Compact) */
 #page4.page {
-    max-width: 320px;
-    padding: 20px 15px;
+    max-width: 280px;
+    padding: 15px 10px;
 }
 
 button{
@@ -198,7 +198,7 @@ animation:flicker .15s infinite alternate;">
 </div>
 
 <script>
-/* โค้ด JavaScript เหมือนเดิมทุกประการ */
+/* โค้ด JavaScript ทั้งหมดเหมือนเดิมครับ */
 let micStarted=false;
 let blown=false;
 
@@ -304,7 +304,6 @@ setTimeout(()=>{
 const img=document.createElement("img");
 img.src=src;
 img.className="photo";
-// สุ่มตำแหน่งให้กระจายทั่วหน้าจอขึ้น
 img.style.top=(Math.random()*65+10)+"vh";
 img.style.left=(Math.random()*65+10)+"vw";
 img.style.setProperty('--r',(Math.random()*40-20)+'deg');
